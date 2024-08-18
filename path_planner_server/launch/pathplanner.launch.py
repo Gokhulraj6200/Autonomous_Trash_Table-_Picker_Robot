@@ -9,6 +9,7 @@ def generate_launch_description():
     bt_navigator_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'bt_navigator.yaml')
     planner_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'planner_server.yaml')
     recovery_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'recovery.yaml')
+    filters_yaml = os.path.join(get_package_share_directory('path_planner_server'), 'config', 'filter.yaml')
     # RVIZ configuration file
     rviz_file = "pathplanning.rviz"
     rviz_config_dir = os.path.join(get_package_share_directory("path_planner_server"), "rviz", rviz_file)
@@ -47,6 +48,22 @@ def generate_launch_description():
             parameters=[bt_navigator_yaml]),
 
         Node(
+            package='nav2_map_server',
+            executable='map_server',
+            name='filter_mask_server',
+            output='screen',
+            emulate_tty=True,
+            parameters=[filters_yaml]),
+
+        Node(
+            package='nav2_map_server',
+            executable='costmap_filter_info_server',
+            name='costmap_filter_info_server',
+            output='screen',
+            emulate_tty=True,
+            parameters=[filters_yaml]),
+
+        Node(
             package="rviz2",
             executable="rviz2",
             output="screen",
@@ -62,5 +79,5 @@ def generate_launch_description():
                         {'node_names': ['planner_server',
                                         'controller_server',
                                         'behavior_server',
-                                        'bt_navigator']}])
+                                        'bt_navigator', 'filter_mask_server','costmap_filter_info_server']}])
     ])

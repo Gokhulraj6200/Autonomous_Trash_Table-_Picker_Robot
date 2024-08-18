@@ -7,7 +7,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     nav2_yaml = os.path.join(get_package_share_directory('localization_server'), 'config', 'amcl_config.yaml')
-    map_file = os.path.join(get_package_share_directory('map_server'), 'config', 'cafeteria_map_sim.yaml')
+    map_file = os.path.join(get_package_share_directory('map_server'), 'config', 'cafeteria_keepoutmap_sim.yaml')
     rviz_file = os.path.join(get_package_share_directory('localization_server'), 'rviz', 'sim.rviz')
 
     return LaunchDescription([
